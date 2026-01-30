@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digit Recognizer</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        canvas { border: 2px solid #333; cursor: crosshair; background-color: black; }
+    </style>
+</head>
+<body>
+
+    <h2>Draw a digit (0–9)</h2>
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <br><br>
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="predict()">Predict</button>
+    <h3 id="result"></h3>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 15;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        let drawing = false;
+
+        canvas.onmousedown = (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        };
+
+        canvas.onmouseup = () => drawing = false;
+        
+        canvas.onmousemove = (e) => {
+            if (!drawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        };
+
+        function clearCanvas() {
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("result").innerText = "";
+        }
+
+        function predict() {
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("image", blob);
+
+                fetch("http://127.0.0.1:8000/predict", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("result").innerText = "Error: " + data.error;
+                    } else {
+                        document.getElementById("result").innerText = 
+                            `Predicted: ${data.digit} (${(data.confidence * 100).toFixed(1)}%)`;
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
