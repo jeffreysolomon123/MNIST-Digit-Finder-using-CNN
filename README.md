@@ -1,5 +1,6 @@
 ### A simple handwritten digit recognition application using a Convolutional Neural Network (CNN) trained on the MNIST dataset. You can draw digits (0–9) on a browser canvas, and the model predicts the digit in real time via a FastAPI backend.
-![Untitled video - Made with Clipchamp (1)](https://github.com/user-attachments/assets/52af191b-8000-45c7-bfff-3881a7fa8670)
+![Untitled video - Made with Clipchamp (2)](https://github.com/user-attachments/assets/7a1576bb-b774-4998-b2ab-726cf640c52b)
+
 **Model Architecture**
 - Input shape: 28 × 28 × 1 (grayscale image)
 - Convolutional layers:
@@ -31,4 +32,5 @@ Dataset size:
 - Backend is implemented using FastAPI, exposing a /predict endpoint for model inference.
 - Image preprocessing and prediction are performed server-side using TensorFlow.
 - The backend returns the predicted digit (0–9) as a JSON response.
+
 
