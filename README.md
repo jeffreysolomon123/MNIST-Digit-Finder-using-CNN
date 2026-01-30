@@ -11,3 +11,19 @@ You can draw digits (0–9) on a browser canvas, and the model predicts the digi
 - Pooling layers: 2 × MaxPooling (2×2)
 - Fully connected layer: 128 neurons (ReLU)
 - Output layer: 10 neurons (Softmax)
+
+**Training Configuration**
+Dataset size:
+- Training samples: 60,000
+- Test samples: 10,000
+- Optimizer: Adam
+- Loss function: Sparse Categorical Cross-Entropy
+- Batch size: 64
+- Epochs: 5
+- Validation split: 10%
+
+**Model Performance**
+- Training accuracy: ~99%
+- Test accuracy: ~99.0–99.1%
+- Test loss: ~0.03
+- Inference time: ~8 ms per batch (CPU)
